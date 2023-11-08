@@ -24,6 +24,8 @@ const Form = () => {
       setPhone('');
     } else {
       Notiflix.Notify.warning('Name and number cannot be empty.');
+      setName('');
+      setPhone('');
     }
   };
 
