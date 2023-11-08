@@ -1,7 +1,8 @@
+import Notiflix from 'notiflix';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { addNewContact } from 'components/redux/operations';
+import { addNewContact } from 'redux/operations';
 
 import styled from 'styled-components';
 
@@ -10,37 +11,48 @@ const Form = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
 
+  const contact = {
+    name: name.trim(),
+    phone: phone.trim(),
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(addNewContact({ name, phone }));
-    setName('');
-    setPhone('');
+    if (contact.name !== '' && contact.phone !== '') {
+      dispatch(addNewContact(contact));
+      setName('');
+      setPhone('');
+    } else {
+      Notiflix.Notify.warning('Name and number cannot be empty.');
+    }
   };
 
   return (
-    <FormStyled onSubmit={handleSubmit}>
-      <input
-        value={name}
-        onChange={e => {
-          setName(e.target.value);
-        }}
-        type="text"
-        placeholder="Enter name"
-      />
-      <input
-        value={phone}
-        onChange={e => {
-          setPhone(e.target.value);
-        }}
-        type="tel"
-        placeholder="Enter phone"
-      />
-      <ButtonStyled>Add contact</ButtonStyled>
-    </FormStyled>
+    <>
+      <FormStyled onSubmit={handleSubmit}>
+        <input
+          value={name}
+          onChange={e => {
+            setName(e.target.value);
+          }}
+          type="text"
+          placeholder="Enter name"
+          required
+        />
+        <input
+          value={phone}
+          onChange={e => {
+            setPhone(e.target.value);
+          }}
+          type="tel"
+          placeholder="Enter phone"
+          required
+        />
+        <ButtonStyled>Add contact</ButtonStyled>
+      </FormStyled>
+    </>
   );
 };
-
-//============================================================================================
 
 const FormStyled = styled.form`
   display: flex;

@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import Form from './Form';
 import Filter from './Filter';
 
-import { fetchAll } from 'components/redux/sliceContact';
-import { selectFind } from 'components/redux/sliceFind';
-import { deleteContact, fetchAllContacts } from 'components/redux/operations';
+import { fetchAll } from 'redux/sliceContact';
+import { selectFind } from 'redux/sliceFind';
+import { deleteContact, fetchAllContacts } from 'redux/operations';
 
 import styled from 'styled-components';
 

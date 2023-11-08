@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getFindValue, selectFind } from 'components/redux/sliceFind';
+import { getFindValue, selectFind } from 'redux/sliceFind';
 
 const Filter = () => {
   const dispatch = useDispatch();
