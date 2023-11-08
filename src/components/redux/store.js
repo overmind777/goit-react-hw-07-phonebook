@@ -1,7 +1,4 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { contactsReducer } from './sliceContact';
-import { findReduser } from './sliceFind';
-
 import storage from 'redux-persist/lib/storage';
 import {
   persistStore,
@@ -14,6 +11,9 @@ import {
   REGISTER,
 } from 'redux-persist';
 
+import { contactsReducer } from './sliceContact';
+import { findReduser } from './sliceFind';
+
 const persistConfig = {
   key: 'root',
   storage,
@@ -23,7 +23,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(
   persistConfig,
   combineReducers({
-    contact: contactsReducer,
+    contacts: contactsReducer,
     find: findReduser,
   })
 );

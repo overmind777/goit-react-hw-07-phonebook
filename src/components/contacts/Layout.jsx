@@ -1,41 +1,51 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import Form from './Form';
 import Filter from './Filter';
-import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { removeContact, selectContacts } from 'components/redux/sliceContact';
+
+import { fetchAll } from 'components/redux/sliceContact';
 import { selectFind } from 'components/redux/sliceFind';
+import { deleteContact, fetchAllContacts } from 'components/redux/operations';
+
+import styled from 'styled-components';
 
 const getFilteredContacts = (contacts, filter) => {
-  const normalizedFilter = filter.toLowerCase();
-  return contacts.filter(contact =>
-    contact.name.toLowerCase().includes(normalizedFilter)
+  return contacts.filter(({ name }) =>
+    name.toLowerCase().includes(filter?.toLowerCase())
   );
 };
 
 const Layout = () => {
   const dispatch = useDispatch();
-
-  const contacts = useSelector(selectContacts);
+  const { items, isLoading, error } = useSelector(fetchAll);
   const filter = useSelector(selectFind);
 
-  const filteredContacts = getFilteredContacts(contacts, filter);
+  const filteredContacts = getFilteredContacts(items, filter);
+
+  useEffect(() => {
+    dispatch(fetchAllContacts());
+  }, [dispatch]);
+
+  const handleClickDelete = id => {
+    dispatch(deleteContact(id));
+  };
 
   return (
     <WrapperStyled>
+      {isLoading && <p>Loading tasks...</p>}
+      {error && <p>{error}</p>}
       <h2>Phone Contacts</h2>
       <Form />
       <Filter />
       <ListStyled>
-        {filteredContacts?.map(({ id, name, number }) => {
+        {filteredContacts?.map(({ id, name, phone }) => {
           return (
             <ItemStyled key={id}>
               <p>
-                {name} {number}
+                {name}: {phone}
               </p>
-              <button onClick={() => dispatch(removeContact(id))}>
-                Delete
-              </button>
+              <button onClick={() => handleClickDelete(id)}>Delete</button>
             </ItemStyled>
           );
         })}

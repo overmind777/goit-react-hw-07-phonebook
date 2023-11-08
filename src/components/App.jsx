@@ -1,5 +1,6 @@
-import styled from 'styled-components';
 import Layout from './contacts/Layout';
+
+import styled from 'styled-components';
 
 export const App = () => {
   return (

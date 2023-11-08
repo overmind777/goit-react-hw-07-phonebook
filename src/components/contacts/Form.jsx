@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addContact } from '../redux/sliceContact';
+
+import { addNewContact } from 'components/redux/operations';
+
 import styled from 'styled-components';
 
 const Form = () => {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setPhone] = useState('');
 
   const handleSubmit = e => {
     e.preventDefault();
-
-    dispatch(addContact({ name, number }));
+    dispatch(addNewContact({ name, phone }));
     setName('');
-    setNumber('');
+    setPhone('');
   };
 
   return (
@@ -27,9 +28,9 @@ const Form = () => {
         placeholder="Enter name"
       />
       <input
-        value={number}
+        value={phone}
         onChange={e => {
-          setNumber(e.target.value);
+          setPhone(e.target.value);
         }}
         type="tel"
         placeholder="Enter phone"
